@@ -26,6 +26,9 @@ const startApp = async () => {
 
     // Add Routes
     app.use("/api/users", usersRouter);
+    
+    // Serve static assets
+    app.use('/static', express.static(path.join(__dirname, 'static')));
 
     // Set static folder for frontend
     app.use(express.static(path.resolve(__dirname, "../", "client", "build")));
