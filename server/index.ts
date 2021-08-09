@@ -26,18 +26,22 @@ const startApp = async () => {
 
     // Add Routes
     app.use("/api/users", usersRouter);
-    
+
     // Serve static assets
-    app.use('/static', express.static(path.join(__dirname, 'static')));
+    app.use("/static", express.static(path.join(__dirname, "static")));
 
     // Set static folder for frontend
-    app.use(express.static(path.resolve(__dirname, "../", "client", "build")));
-
-    app.get("*", (req, res) => {
-      res.sendFile(
-        path.resolve(__dirname, "../", "client", "build", "index.html")
+    if (process.env.NODE_ENV !== "development") {
+      app.use(
+        express.static(path.resolve(__dirname, "../", "client", "build"))
       );
-    });
+
+      app.get("*", (req, res) => {
+        res.sendFile(
+          path.resolve(__dirname, "../", "client", "build", "index.html")
+        );
+      });
+    }
 
     // Start listening on PORT
     app.listen(process.env.PORT, () =>

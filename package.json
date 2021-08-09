@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "description": "Polkadot scanner frontend and backend tasks",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon",
+    "dev": "concurrently \"cross-env NODE_ENV=development yarn server\" \"cross-env NODE_ENV=development yarn client\"",
     "start": "node -r ts-node/register -r dotenv-flow/config ./server/index.ts",
+    "server": "nodemon",
+    "client": "yarn --cwd client start",
     "eslint": "eslint **/*.{js,jsx,ts,tsx}",
     "prettier": "prettier --check **/*.{js,jsx,ts,tsx,htm,html,json,xml,yml,css,scss,sass,less,webmanifest,svg}",
-    "prettier:fix": "prettier --write **/*.{js,jsx,ts,tsx,htm,html,json,xml,yml,css,scss,sass,less,webmanifest,svg}"
+    "prettier:fix": "prettier --write **/*.{js,jsx,ts,tsx,htm,html,json,xml,yml,css,scss,sass,less,webmanifest,svg}",
+    "heroku-postbuild": "cross-env NPM_CONFIG_PRODUCTION=false yarn --cwd client install && yarn --cwd client build"
   },
   "nodemonConfig": {
     "ignore": [
@@ -36,6 +39,7 @@
   "dependencies": {
     "basic-auth": "^2.0.1",
     "bcryptjs": "^2.4.3",
+    "concurrently": "^6.2.1",
     "consola": "^2.15.3",
     "cross-env": "^7.0.3",
     "dotenv-flow": "^3.2.0",

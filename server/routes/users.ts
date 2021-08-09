@@ -48,7 +48,22 @@ usersRouter.post("", async (req, res) => {
       updatedAt: savedUser.updatedAt,
     });
   } catch (e) {
-    res.status(401).json({
+    res.status(500).json({
+      msg: e.message,
+    });
+  }
+});
+
+/**
+ * @route   GET api/users/is-admin
+ * @desc    Check if a user is an admin
+ */
+usersRouter.get("/is-admin", async (req, res) => {
+  try {
+    // Check that user is admin
+    res.status(200).json(req.user?.role === "admin");
+  } catch (e) {
+    res.status(500).json({
       msg: e.message,
     });
   }
