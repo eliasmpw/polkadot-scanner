@@ -17,7 +17,6 @@ const userReducer = (state = initialState, action: any): any => {
         isLoading: true,
       };
     case IS_ADMIN_LOADED:
-      console.log(action);
       return {
         ...state,
         isLoading: false,
